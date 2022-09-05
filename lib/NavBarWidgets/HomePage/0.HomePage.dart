@@ -1,5 +1,6 @@
 import 'package:alsanaferbookshop/NavBarWidgets/HomePage/2.Categories.dart';
 import 'package:alsanaferbookshop/NavBarWidgets/HomePage/1.HomePageSlider.dart';
+import 'package:alsanaferbookshop/NavBarWidgets/HomePage/3.BackToSchool.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
