@@ -23,7 +23,7 @@ class Categories extends StatelessWidget {
     Category(
         'Sewing Kit',
         'https://admin.alsanaferbookshop.com//Resources/3/Ecommerce/CategoryImage/13.jpg',
-        Colors.lightGreenAccent),
+        Colors.grey),
 
 
     Category(

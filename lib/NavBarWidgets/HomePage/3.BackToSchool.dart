@@ -1,5 +1,7 @@
 import 'package:alsanaferbookshop/configs/colors.dart';
+import 'package:alsanaferbookshop/products.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 
 class BackToSchool extends StatelessWidget {
@@ -42,7 +44,7 @@ class BackToSchool extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 physics: BouncingScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: 4,
+                itemCount: products.length,
                 itemBuilder: (c, i) {
                   return Padding(
                     padding: const EdgeInsets.all(6.0),
@@ -52,14 +54,13 @@ class BackToSchool extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.grey.shade100)),
                       child: Center(
-                          child: Column(
+                          child: Column(mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           CachedNetworkImage(
-                            imageUrl:
-                                'https://admin.alsanaferbookshop.com//Resources/3/Ecommerce/ItemImage/34030-1.jpg',
+                            imageUrl: products[i].imageUrl,
                             fit: BoxFit.fill,
-                            height: height(context)/2,
+                            height: height(context) / 2,
                             placeholder: (context, url) => Container(
                                 height: 20,
                                 width: 20,
@@ -67,13 +68,79 @@ class BackToSchool extends StatelessWidget {
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                           ),
-                          Text(
-                            'Minnie wood clip',
-                            style: TextStyle(
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.w800),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4,bottom: 2),
+                            child: Text(
+                              products[i].name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontWeight: FontWeight.w800),
+                            ),
                           ),
-                          Container()
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8,right: 8,top: 4,bottom: 4),
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      color: kPrimaryColor, width: 1)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 4),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Piece',
+                                      style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    Text('1'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 2),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4,right: 4),
+                                    child: Text(
+                                      products[i].newPrice.toString(),
+                                      style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(),
+                                    child: Text(
+                                      "KW",
+                                      style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Text('1'),
+                                  IconButton(onPressed: (){}, icon: Icon(Icons.add_shopping_cart_outlined))
+                                ],
+                              ),
+                            ),
+                          )
                         ],
                       )),
                     ),
@@ -86,5 +153,7 @@ class BackToSchool extends StatelessWidget {
   }
 
   double height(BuildContext context) =>
-      MediaQuery.of(context).size.height * .4;
+      MediaQuery.of(context).size.height * .45;
 }
+
+

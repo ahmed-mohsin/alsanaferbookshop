@@ -1,6 +1,7 @@
 import 'package:alsanaferbookshop/NavBarWidgets/HomePage/2.Categories.dart';
 import 'package:alsanaferbookshop/NavBarWidgets/HomePage/1.HomePageSlider.dart';
 import 'package:alsanaferbookshop/NavBarWidgets/HomePage/3.BackToSchool.dart';
+import 'package:alsanaferbookshop/NavBarWidgets/HomePage/4.Deals.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -15,10 +16,12 @@ class HomePage extends StatelessWidget {
       child: Column(children:  [
         const SizedBox(height: 8,),
         const HomePageSlider(),
+        const SizedBox(height: 8,),
+        Deals(),
         Categories(),
         const SizedBox(height: 8,),
          BackToSchool(),
-        Deals(),
+        const SizedBox(height: 8,),
         RecentlyAdded(),
         MostSell(),
         Favorites()
@@ -32,14 +35,7 @@ class HomePage extends StatelessWidget {
 
 
 
-class Deals extends StatelessWidget {
-  const Deals({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
 
 class RecentlyAdded extends StatelessWidget {
   const RecentlyAdded({Key? key}) : super(key: key);
