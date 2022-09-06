@@ -75,7 +75,7 @@ final List<Widget> imageSliders = imgList
                 child: CachedNetworkImage(
                   imageUrl: item,fit: BoxFit.fill,height: double.infinity, width: double.infinity,
                   placeholder: (context, url) =>
-                  Container(height: 20,width: 20,child: const CircularProgressIndicator()),
+                  Container(height: 20,width: 20,child: Container()),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 )),
           ),

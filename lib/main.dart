@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Alsanafer',debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primarySwatch: kPrimaryColor,
+      theme: ThemeData(fontFamily: 'Opensans',
+          primarySwatch: kPrimaryColor,textTheme: TextTheme(subtitle1: TextStyle(fontSize: 20,fontWeight: FontWeight.w900,color: Colors.deepOrange)),
           inputDecorationTheme: InputDecorationTheme(
               contentPadding: EdgeInsets.symmetric(horizontal: 10))),
       home: MyExample(),
@@ -67,7 +67,7 @@ class _MyExampleState extends State<MyExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
+      body: CustomScrollView(physics: BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             floating: true,

@@ -18,12 +18,15 @@ class HomePage extends StatelessWidget {
         const HomePageSlider(),
         const SizedBox(height: 8,),
         Deals(),
+        const SizedBox(height: 8,),
         Categories(),
         const SizedBox(height: 8,),
          BackToSchool(),
         const SizedBox(height: 8,),
         RecentlyAdded(),
+        const SizedBox(height: 8,),
         MostSell(),
+        const SizedBox(height: 8,),
         Favorites()
       ]),
     );

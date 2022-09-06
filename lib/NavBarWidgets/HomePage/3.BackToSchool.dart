@@ -1,3 +1,4 @@
+import 'package:alsanaferbookshop/ProductFullProfile.dart';
 import 'package:alsanaferbookshop/configs/colors.dart';
 import 'package:alsanaferbookshop/products.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -48,102 +49,7 @@ class BackToSchool extends StatelessWidget {
                 itemBuilder: (c, i) {
                   return Padding(
                     padding: const EdgeInsets.all(6.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * .45,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.grey.shade100)),
-                      child: Center(
-                          child: Column(mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: products[i].imageUrl,
-                            fit: BoxFit.fill,
-                            height: height(context) / 2,
-                            placeholder: (context, url) => Container(
-                                height: 20,
-                                width: 20,
-                                child: const CircularProgressIndicator()),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 4,bottom: 2),
-                            child: Text(
-                              products[i].name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontWeight: FontWeight.w800),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8,right: 8,top: 4,bottom: 4),
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color: kPrimaryColor, width: 1)),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 4),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Piece',
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    Text('1'),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 2),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 4,right: 4),
-                                    child: Text(
-                                      products[i].newPrice.toString(),
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(),
-                                    child: Text(
-                                      "KW",
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Text('1'),
-                                  IconButton(onPressed: (){}, icon: Icon(Icons.add_shopping_cart_outlined))
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      )),
-                    ),
+                    child: SingleProduct(products[i]),
                   );
                 }),
           )
@@ -156,4 +62,121 @@ class BackToSchool extends StatelessWidget {
       MediaQuery.of(context).size.height * .45;
 }
 
+class SingleProduct extends StatelessWidget {
+  Product product;
 
+  SingleProduct(this.product);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * .45,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.grey.shade100)),
+      child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              GestureDetector(onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (c)=>ProductFullProfile(product)));
+              },
+                child: Column(
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl: product.imageUrl,
+                      fit: BoxFit.fill,
+                      height: MediaQuery.of(context).size.height * .45 / 2,
+                      placeholder: (context, url) => Container(
+                          height: 20, width: 20, child: Container()),
+                      errorWidget: (context, url, error) =>
+                      const Icon(Icons.error),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4, bottom: 2),
+                      child: Text(
+                        product.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.w800),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 8, right: 8, top: 4, bottom: 4),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          color: kPrimaryColor, width: 1)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8, vertical: 4),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Piece',
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        Text('1'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                child: Padding(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 2),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 4, right: 4),
+                        child: Text(
+                          product.newPrice.toString(),
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(),
+                        child: Text(
+                          "KW",
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                      Spacer(),
+                      Text('1'),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                              Icons.add_shopping_cart_outlined))
+                    ],
+                  ),
+                ),
+              )
+            ],
+          )),
+    );
+  }
+}

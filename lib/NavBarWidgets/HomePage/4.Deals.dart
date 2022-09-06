@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
+import '../../configs/colors.dart';
 import '../../hh.dart';
 
 class Deals extends StatefulWidget {
@@ -19,7 +20,7 @@ class _SwipperSectionState extends State<Deals> {
           child: FlipClock.countdown(
             duration: Duration(days: 3, minutes: 25),
             digitColor: Colors.white,
-            backgroundColor: Colors.black,
+            backgroundColor: kPrimaryColor,
             digitSize: 30.0,
             borderRadius: const BorderRadius.all(Radius.circular(3.0)),
             onDone: () => print('ih'),
@@ -44,10 +45,16 @@ class _SwipperSectionState extends State<Deals> {
                       child: Material(
                         borderRadius: BorderRadius.circular(12.0),
                         child: CachedNetworkImage(
-                          imageUrl: products[index].imageUrl,fit: BoxFit.fill,height: double.infinity, width: double.infinity,
-                          placeholder: (context, url) =>
-                              Container(height: 20,width: 20,child: const CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                          imageUrl: products[index].imageUrl,
+                          fit: BoxFit.fill,
+                          height: double.infinity,
+                          width: double.infinity,
+                          placeholder: (context, url) => Container(
+                              height: 20,
+                              width: 20,
+                              child:  Container()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
                     ),
@@ -65,14 +72,17 @@ class _SwipperSectionState extends State<Deals> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Container(
-                          color: Colors.redAccent,
-                          child: Text(
-                              '${(products[index].newPrice / products[index].oldPrice * 100).round()}% OFF',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold)),
+                         color: Colors.red
+                        ,child: Padding(
+                            padding: const EdgeInsets.only(left: 4,right: 4,top: 2,bottom: 2),
+                            child: Text(
+                                '${(products[index].newPrice / products[index].oldPrice * 100).round()}% OFF',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold)),
+                          ),
                         ),
                       ),
                     ),

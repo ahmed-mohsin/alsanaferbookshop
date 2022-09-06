@@ -67,7 +67,7 @@ class Categories extends StatelessWidget {
                         placeholder: (context, url) => Container(
                             height: 20,
                             width: 20,
-                            child: CircularProgressIndicator()),
+                            child: Container()),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
                       ),
@@ -80,7 +80,7 @@ class Categories extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w700,
                             color: categories[i].color),
                       ),
                     )
