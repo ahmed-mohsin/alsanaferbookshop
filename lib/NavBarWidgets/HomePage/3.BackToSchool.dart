@@ -1,4 +1,5 @@
-import 'package:alsanaferbookshop/ProductFullProfile.dart';
+import 'package:alsanaferbookshop/CategoriesAllProducts/CategoryAllProducts.dart';
+import 'package:alsanaferbookshop/ProductFullProfile/ProductFullProfile.dart';
 import 'package:alsanaferbookshop/configs/colors.dart';
 import 'package:alsanaferbookshop/products.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -33,7 +34,13 @@ class BackToSchool extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child:
-                    ElevatedButton(onPressed: () {}, child: Text('See More')),
+                    ElevatedButton(onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) =>
+                                  CategoryAllProducts('Back To School')));
+                    }, child: Text('See More')),
               )
             ],
           ),
@@ -62,15 +69,25 @@ class BackToSchool extends StatelessWidget {
       MediaQuery.of(context).size.height * .45;
 }
 
-class SingleProduct extends StatelessWidget {
+class SingleProduct extends StatefulWidget {
   Product product;
 
   SingleProduct(this.product);
 
   @override
+  State<SingleProduct> createState() => _SingleProductState();
+}
+
+class _SingleProductState extends State<SingleProduct> {
+  String dropdownvalue = 'Piece (1)';
+
+  var items = [
+    'Piece (1)',"Packet (10)"
+  ];
+  @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * .45,
+      width: MediaQuery.of(context).size.width * .48,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: Colors.grey.shade100)),
@@ -80,12 +97,12 @@ class SingleProduct extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               GestureDetector(onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (c)=>ProductFullProfile(product)));
+                Navigator.push(context, MaterialPageRoute(builder: (c)=>ProductFullProfile(widget.product)));
               },
                 child: Column(
                   children: [
                     CachedNetworkImage(
-                      imageUrl: product.imageUrl,
+                      imageUrl: widget.product.imageUrl,
                       fit: BoxFit.fill,
                       height: MediaQuery.of(context).size.height * .45 / 2,
                       placeholder: (context, url) => Container(
@@ -96,7 +113,7 @@ class SingleProduct extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 4, bottom: 2),
                       child: Text(
-                        product.name,
+                        widget.product.name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
@@ -114,25 +131,34 @@ class SingleProduct extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(5),
                       border: Border.all(
                           color: kPrimaryColor, width: 1)),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8, vertical: 4),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Piece',
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.w400),
+                    child: Container(
+                      height: 25,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(style: TextStyle(color: kPrimaryColor),
+                          elevation: 0,
+                          value: dropdownvalue,
+                          icon: Icon(Icons.keyboard_arrow_down),
+                          items:items.map((String items) {
+                            return DropdownMenuItem(
+                                value: items,
+                                child: Text(items)
+                            );
+                          }
+                          ).toList(),
+                          onChanged: (String? newValue){
+                            setState(() {
+                              dropdownvalue = newValue!;
+                            });
+                          },
+
                         ),
-                        Text('1'),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -150,7 +176,7 @@ class SingleProduct extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 4, right: 4),
                         child: Text(
-                          product.newPrice.toString(),
+                          widget.product.newPrice.toString(),
                           style: TextStyle(
                               color: kPrimaryColor,
                               fontWeight: FontWeight.w900),
@@ -179,4 +205,11 @@ class SingleProduct extends StatelessWidget {
           )),
     );
   }
+}
+
+class PieceOrPacket{
+  String name;
+  int num;
+
+  PieceOrPacket(this.name,this.num);
 }

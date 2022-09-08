@@ -2,7 +2,11 @@ import 'package:alsanaferbookshop/NavBarWidgets/HomePage/2.Categories.dart';
 import 'package:alsanaferbookshop/NavBarWidgets/HomePage/1.HomePageSlider.dart';
 import 'package:alsanaferbookshop/NavBarWidgets/HomePage/3.BackToSchool.dart';
 import 'package:alsanaferbookshop/NavBarWidgets/HomePage/4.Deals.dart';
+import 'package:alsanaferbookshop/NavBarWidgets/HomePage/6.Favorites.dart';
+import 'package:alsanaferbookshop/NavBarWidgets/HomePage/7.MostSelling.dart';
 import 'package:flutter/material.dart';
+
+import '5.RececentlyAdded.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -17,16 +21,30 @@ class HomePage extends StatelessWidget {
         const SizedBox(height: 8,),
         const HomePageSlider(),
         const SizedBox(height: 8,),
-        Deals(),
+       // Deals(),
         const SizedBox(height: 8,),
         Categories(),
         const SizedBox(height: 8,),
          BackToSchool(),
         const SizedBox(height: 8,),
         RecentlyAdded(),
-        const SizedBox(height: 8,),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 4,
+            color: Colors.grey.shade100,
+          ),
+        ),
         MostSell(),
-        const SizedBox(height: 8,),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 4,
+            color: Colors.grey.shade100,
+          ),
+        ),
         Favorites()
       ]),
     );
@@ -40,29 +58,7 @@ class HomePage extends StatelessWidget {
 
 
 
-class RecentlyAdded extends StatelessWidget {
-  const RecentlyAdded({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
 
-class MostSell extends StatelessWidget {
-  const MostSell({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
 
-class Favorites extends StatelessWidget {
-  const Favorites({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}

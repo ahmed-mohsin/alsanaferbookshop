@@ -1,3 +1,4 @@
+import 'package:alsanaferbookshop/CategoriesAllProducts/CategoryAllProducts.dart';
 import 'package:alsanaferbookshop/configs/colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +25,6 @@ class Categories extends StatelessWidget {
         'Sewing Kit',
         'https://admin.alsanaferbookshop.com//Resources/3/Ecommerce/CategoryImage/13.jpg',
         Colors.grey),
-
-
     Category(
         'Art & Craft',
         'https://admin.alsanaferbookshop.com//Resources/3/Ecommerce/CategoryImage/6.jpg',
@@ -44,48 +43,55 @@ class Categories extends StatelessWidget {
           shrinkWrap: true,
           itemCount: categories.length,
           itemBuilder: (c, i) {
-            return Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width * .28,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (c) =>
+                            CategoryAllProducts(categories[i].name)));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .28,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                  child: Center(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CircleAvatar(
+                        minRadius: MediaQuery.of(context).size.width * .12,
+                        backgroundColor: categories[i].color,
+                        child: CachedNetworkImage(
+                          imageUrl: categories[i].image,
+                          fit: BoxFit.fill,
+                          height: 50,
+                          width: 50,
+                          placeholder: (context, url) => Container(
+                              height: 20, width: 20, child: Container()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4, bottom: 4),
+                        child: Text(
+                          categories[i].name,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: categories[i].color),
+                        ),
+                      )
+                    ],
+                  )),
                 ),
-                child: Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CircleAvatar(
-                      minRadius: MediaQuery.of(context).size.width * .12,
-                      backgroundColor: categories[i].color,
-                      child: CachedNetworkImage(
-                        imageUrl: categories[i].image,
-                        fit: BoxFit.fill,
-                        height: 50,
-                        width: 50,
-                        placeholder: (context, url) => Container(
-                            height: 20,
-                            width: 20,
-                            child: Container()),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4, bottom: 4),
-                      child: Text(
-                        categories[i].name,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: categories[i].color),
-                      ),
-                    )
-                  ],
-                )),
               ),
             );
           }),

@@ -1,11 +1,15 @@
+import 'package:alsanaferbookshop/Boarding.dart';
 import 'package:alsanaferbookshop/configs/colors.dart';
 import 'package:alsanaferbookshop/navbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:textfield_search/textfield_search.dart';
 
 import 'NavBarWidgets/HomePage/0.HomePage.dart';
 
 void main() {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  //FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const MyApp());
 }
 
@@ -21,7 +25,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: kPrimaryColor,textTheme: TextTheme(subtitle1: TextStyle(fontSize: 20,fontWeight: FontWeight.w900,color: Colors.deepOrange)),
           inputDecorationTheme: InputDecorationTheme(
               contentPadding: EdgeInsets.symmetric(horizontal: 10))),
-      home: MyExample(),
+      home: OnBoardingScreen(),
     );
   }
 }
