@@ -46,7 +46,7 @@ class BackToSchool extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (c) =>
-                                  CategoryAllProducts('Back To School')));
+                                  CategoryAllProducts('Back To School',BacktoScoolPoducts)));
                     },
                     child: Text('See More')),
               )
@@ -60,11 +60,11 @@ class BackToSchool extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 physics: BouncingScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: products.length,
+                itemCount: BacktoScoolPoducts.length,
                 itemBuilder: (c, i) {
                   return Padding(
                     padding: const EdgeInsets.all(6.0),
-                    child: SingleProduct(products[i]),
+                    child: SingleProduct(BacktoScoolPoducts[i]),
                   );
                 }),
           )

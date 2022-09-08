@@ -3,6 +3,8 @@ import 'package:alsanaferbookshop/configs/colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../products.dart';
+
 class Categories extends StatelessWidget {
   List<Category> categories = [
     Category(
@@ -49,7 +51,7 @@ class Categories extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (c) =>
-                            CategoryAllProducts(categories[i].name)));
+                            CategoryAllProducts(categories[i].name,BacktoScoolPoducts)));
               },
               child: Padding(
                 padding: const EdgeInsets.all(6.0),

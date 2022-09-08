@@ -41,7 +41,7 @@ class Favorites extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (c) =>
-                              CategoryAllProducts('Favorites')));
+                              CategoryAllProducts('Favorites',favoriteProducts)));
                 }, child: Text('See More')),
               )
             ],
@@ -62,7 +62,7 @@ class Favorites extends StatelessWidget {
               itemBuilder: (c, i) {
                 return Padding(
                   padding: const EdgeInsets.all(6.0),
-                  child: SingleProduct(products[i]),
+                  child: SingleProduct(favoriteProducts[i]),
                 );
               })
         ],

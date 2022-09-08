@@ -40,7 +40,7 @@ class RecentlyAdded extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (c) =>
-                              CategoryAllProducts('Recently added')));
+                              CategoryAllProducts('Recently added',products)));
                 }, child: Text('See More')),
               )
             ],

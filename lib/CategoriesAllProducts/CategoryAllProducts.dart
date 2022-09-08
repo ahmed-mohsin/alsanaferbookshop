@@ -8,8 +8,8 @@ import '../NavBarWidgets/HomePage/3.BackToSchool.dart';
 
 class CategoryAllProducts extends StatelessWidget {
   String categoryTitle;
-
-  CategoryAllProducts(this.categoryTitle);
+  List<Product> list ;
+  CategoryAllProducts(this.categoryTitle,this.list);
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +32,11 @@ class CategoryAllProducts extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             shrinkWrap: true,
             padding: EdgeInsets.all(0),
-            itemCount: products.length,
+            itemCount: favoriteProducts.length,
             itemBuilder: (c, i) {
               return Padding(
                 padding: const EdgeInsets.all(6.0),
-                child: SingleProduct(products[i]),
+                child: SingleProduct(favoriteProducts[i]),
               );
             }),
       ),
