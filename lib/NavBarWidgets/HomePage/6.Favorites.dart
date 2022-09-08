@@ -4,6 +4,7 @@ import 'package:alsanaferbookshop/NavBarWidgets/HomePage/5.RececentlyAdded.dart'
 import 'package:alsanaferbookshop/configs/colors.dart';
 import 'package:flutter/material.dart';
 
+import '../../ProductFullProfile/product_card.dart';
 import '../../products.dart';
 
 class Favorites extends StatelessWidget {

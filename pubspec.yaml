@@ -48,6 +48,10 @@ dependencies:
   intro_screen_onboarding_flutter: ^1.0.0
   flutter_native_splash: ^2.2.9
   dropdown_button2: ^1.7.2
+  material_dialogs: ^1.1.3
+  another_flushbar: ^1.10.29
+  badges: ^2.0.3
+  device_preview: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -20,6 +20,7 @@ class ProductFullProfile extends StatefulWidget {
 class _ProductFullProfileState extends State<ProductFullProfile> {
   int simpleIntInput = 1;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,7 +92,7 @@ class _ProductFullProfileState extends State<ProductFullProfile> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
-                          widget.product.oldPrice.toString() + ' KW ',
+                          widget.product.oldPriceOfPiece.toString() + ' KW ',
                           style: TextStyle(
                               fontWeight: FontWeight.w800,
                               decoration: TextDecoration.lineThrough,
@@ -105,7 +106,7 @@ class _ProductFullProfileState extends State<ProductFullProfile> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Text(
-                              widget.product.newPrice.toString() + ' KW ',
+                              widget.product.newPriceOfPiece.toString() + ' KW ',
                               style: TextStyle(
                                   fontWeight: FontWeight.w800,
                                   color: kPrimaryColor,
@@ -115,7 +116,7 @@ class _ProductFullProfileState extends State<ProductFullProfile> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Text(
-                              'you will save ${(widget.product.oldPrice - widget.product.newPrice).round()}' +
+                              'you will save ${(widget.product.oldPriceOfPiece - widget.product.newPriceOfPiece).round()}' +
                                   ' KW',
                               style: TextStyle(
                                   fontWeight: FontWeight.w800,

@@ -4,6 +4,7 @@ import 'package:alsanaferbookshop/configs/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import '../../ProductFullProfile/product_card.dart';
 import '../../products.dart';
 
 class RecentlyAdded extends StatelessWidget {

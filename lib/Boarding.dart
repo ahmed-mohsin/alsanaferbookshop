@@ -39,7 +39,7 @@ class OnBoardingScreen extends StatelessWidget {
     return IntroScreenOnboarding(backgroudColor: Colors.white,
       introductionList: list,
       onTapSkipButton: () {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => MyExample(),

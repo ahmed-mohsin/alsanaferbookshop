@@ -7,36 +7,37 @@ List<Product> products = [
       '2',
       'https://admin.alsanaferbookshop.com//Resources/3/Ecommerce/ItemImage/24876-1.jpg',
       3,
-      19.99,25.00),
+      19.99,25.00,23,26),
   Product(
       faker.company.name(),
       '2',
       'https://admin.alsanaferbookshop.com//Resources/3/Ecommerce/ItemImage/74360-1-%D9%82%D9%84%D9%85-%D8%AD%D8%A8%D8%B1-%D8%B2%D9%8A%D8%A8%D8%B1%D8%A7.jpg',
       3,
-      16.5,20.00),
+      16.5,20.00,23,36),
   Product(
       faker.person.name(),
       '2',
       'https://admin.alsanaferbookshop.com//Resources/3/Ecommerce/ItemImage/77277-1-1.jpg',
       3,
-      2.5,4.00),
+      2.5,4.00,8,15),
   Product(
       faker.sport.name(),
       '2',
       'https://admin.alsanaferbookshop.com//Resources/3/Ecommerce/ItemImage/77469-1-C1327.jpg',
       3,
-      .36,1),
+      .36,1,10,20),
   Product(
       faker.company.name(),
       '2',
       'https://admin.alsanaferbookshop.com//Resources/3/Ecommerce/ItemImage/73211-1.jpg',
       3,
-      22.00,28),
+      22.00,28,50,60),
 ];
 
 class Product {
   String name, id, imageUrl;
-  double newPrice,oldPrice;
+  double newPriceOfPiece,oldPriceOfPiece;
+  double newPriceOfPaket,oldPriceOfPacket;
   int quantity;
-  Product(this.name, this.id, this.imageUrl, this.quantity, this.newPrice,this.oldPrice);
+  Product(this.name, this.id, this.imageUrl, this.quantity, this.newPriceOfPiece,this.oldPriceOfPiece,this.newPriceOfPaket,this.oldPriceOfPacket);
 }
