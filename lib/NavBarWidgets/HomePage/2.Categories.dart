@@ -1,5 +1,5 @@
 import 'package:alsanaferbookshop/CategoriesAllProducts/CategoryAllProducts.dart';
-import 'package:alsanaferbookshop/configs/colors.dart';
+import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

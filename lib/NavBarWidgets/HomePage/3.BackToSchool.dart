@@ -1,6 +1,6 @@
 import 'package:alsanaferbookshop/CategoriesAllProducts/CategoryAllProducts.dart';
 import 'package:alsanaferbookshop/ProductFullProfile/ProductFullProfile.dart';
-import 'package:alsanaferbookshop/configs/colors.dart';
+import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:alsanaferbookshop/products.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:cached_network_image/cached_network_image.dart';

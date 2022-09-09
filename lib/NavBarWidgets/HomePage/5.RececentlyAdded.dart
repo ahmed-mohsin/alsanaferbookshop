@@ -1,6 +1,6 @@
 import 'package:alsanaferbookshop/CategoriesAllProducts/CategoryAllProducts.dart';
 import 'package:alsanaferbookshop/NavBarWidgets/HomePage/3.BackToSchool.dart';
-import 'package:alsanaferbookshop/configs/colors.dart';
+import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 

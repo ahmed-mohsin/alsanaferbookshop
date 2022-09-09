@@ -42,7 +42,7 @@ class OnBoardingScreen extends StatelessWidget {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => MyExample(),
+            builder: (context) => Home(),
           ), //MaterialPageRoute
         );
       },
@@ -50,3 +50,4 @@ class OnBoardingScreen extends StatelessWidget {
     );
   }
 }
+

@@ -1,6 +1,6 @@
 import 'package:alsanaferbookshop/NavBarWidgets/HomePage/5.RececentlyAdded.dart';
 import 'package:alsanaferbookshop/ProductFullProfile/product_card.dart';
-import 'package:alsanaferbookshop/configs/colors.dart';
+import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:alsanaferbookshop/products.dart';
 import 'package:flutter/material.dart';
 

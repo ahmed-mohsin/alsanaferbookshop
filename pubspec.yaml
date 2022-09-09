@@ -52,6 +52,10 @@ dependencies:
   another_flushbar: ^1.10.29
   badges: ^2.0.3
   device_preview: ^1.1.0
+  share_plus: ^4.1.0
+  provider: ^6.0.3
+  flutter_cart: ^0.0.7
+  line_awesome_flutter: ^2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:alsanaferbookshop/configs/colors.dart';
+import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:alsanaferbookshop/products.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable_text/expandable_text.dart';
