@@ -174,24 +174,27 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        Navigator.push(context, CartScreenRoute());
-      }, child: Consumer<CartProvider>(
+      floatingActionButton: Consumer<CartProvider>(
         builder: (context, consumer, child) {
-          return Container(
-            child: Badge(
-              position: BadgePosition.topEnd(top: -15, end: -12),
-              animationDuration: Duration(milliseconds: 300),
-              animationType: BadgeAnimationType.slide,
-              badgeContent: Text(
-                consumer.getCartItems().length.toString(),
-                style: TextStyle(color: Colors.white),
+          return consumer.cartIsEmpty()?Container():FloatingActionButton(
+            onPressed: () {
+              Navigator.push(context, CartScreenRoute());
+            },
+            child: Container(
+              child: Badge(
+                position: BadgePosition.topEnd(top: -15, end: -12),
+                animationDuration: Duration(milliseconds: 300),
+                animationType: BadgeAnimationType.slide,
+                badgeContent: Text(
+                  consumer.getCartItems().length.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                child: Icon(AppIcons.addToCart,size: 35,),
               ),
-              child: Icon(AppIcons.addToCart,size: 35,),
             ),
           );
         },
-      ),),
+      ),
       bottomNavigationBar: bottomNavigationBar(),
     );
   }

@@ -78,15 +78,13 @@ class _CartList extends StatelessWidget {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width * .55,
-                      child: Expanded(
-                        child: Text(
-                          cartProvider.flutterCart.cartItem[index].productName
-                              .toString(),
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700),
-                        ),
+                      child: Text(
+                        cartProvider.flutterCart.cartItem[index].productName
+                            .toString(),
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700),
                       ),
                     ),
                     Row(
