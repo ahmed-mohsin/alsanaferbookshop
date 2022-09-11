@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:alsanaferbookshop/Boarding.dart';
 import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:alsanaferbookshop/coustomRoute.dart';
@@ -10,6 +12,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:textfield_search/textfield_search.dart';
@@ -22,6 +25,9 @@ import 'models/cart.dart';
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   //FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
   // DevicePreview(
   //   enabled: !kReleaseMode,
@@ -38,19 +44,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         // In this sample app, CatalogModel never changes, so a simple Provider
-        // is sufficient.
-        Provider(create: (context) => CatalogModel()),
-        // CartModel is implemented as a ChangeNotifier, which calls for the use
-        // of ChangeNotifierProvider. Moreover, CartModel depends
-        // on CatalogModel, so a ProxyProvider is needed.
-        ChangeNotifierProxyProvider<CatalogModel, CartModel>(
-          create: (context) => CartModel(),
-          update: (context, catalog, cart) {
-            if (cart == null) throw ArgumentError.notNull('cart');
-            cart.catalog = catalog;
-            return cart;
-          },
-        ),
+        // is sufficient
         ChangeNotifierProvider(
           create: (_) => CartProvider(),
         ),
@@ -123,7 +117,7 @@ class _HomeState extends State<Home> {
     });
 
     myController.addListener(_printLatestValue);
-    if(myController.text.isEmpty){
+    if (myController.text.isEmpty) {
       print('hh');
     }
   }
@@ -145,26 +139,6 @@ class _HomeState extends State<Home> {
             centerTitle: false,
             backgroundColor: kPrimaryColor,
             title: const Text('Alsanafer Bookshop'),
-            actions: [
-              Consumer<CartProvider>(
-                builder: (context, consumer, child) {
-                  return Badge(
-                    position: BadgePosition.topEnd(top: 0, end: 3),
-                    animationDuration: Duration(milliseconds: 300),
-                    animationType: BadgeAnimationType.slide,
-                    badgeContent: Text(
-                      consumer.getCartItems().length.toString(),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    child: IconButton(
-                        icon: Icon(AppIcons.cart),
-                        onPressed: () {
-                          Navigator.push(context, CartScreenRoute());
-                        }),
-                  );
-                },
-              )
-            ],
             bottom: AppBar(
               backgroundColor: kPrimaryColor,
               title: Container(
@@ -200,6 +174,24 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigator.push(context, CartScreenRoute());
+      }, child: Consumer<CartProvider>(
+        builder: (context, consumer, child) {
+          return Container(
+            child: Badge(
+              position: BadgePosition.topEnd(top: -15, end: -12),
+              animationDuration: Duration(milliseconds: 300),
+              animationType: BadgeAnimationType.slide,
+              badgeContent: Text(
+                consumer.getCartItems().length.toString(),
+                style: TextStyle(color: Colors.white),
+              ),
+              child: Icon(AppIcons.addToCart,size: 35,),
+            ),
+          );
+        },
+      ),),
       bottomNavigationBar: bottomNavigationBar(),
     );
   }

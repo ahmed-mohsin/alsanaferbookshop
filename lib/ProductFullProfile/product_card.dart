@@ -42,15 +42,15 @@ class _SingleProductState extends State<SingleProduct> {
     _cartProvider = Provider.of<CartProvider>(context, listen: false);
     currentPrice = widget.product.newPriceOfPiece;
     _isInCart = _checkItemisInCart();
-    if(_isInCart!=0){
-      addedToCart=true;
+    if (_isInCart != 0) {
+      addedToCart = true;
     }
   }
 
   int _checkItemisInCart() {
-    _cartItem = _cartProvider.getSpecificItemFromCartProvider(widget.product.id);
+    _cartItem =
+        _cartProvider.getSpecificItemFromCartProvider(widget.product.id);
     return _cartItem?.quantity ?? 0;
-
   }
 
   @override
@@ -177,7 +177,11 @@ class _SingleProductState extends State<SingleProduct> {
                               addedToCart = !addedToCart;
                             });
                             if (addedToCart) {
-                              _cartProvider.addToCart(Item(int.parse(widget.product.id),widget.product.name));
+                              _cartProvider.addToCart(Item(
+                                  int.parse(widget.product.id),
+                                  widget.product.name,
+                                  widget.product.imageUrl,
+                                  currentPrice!));
                               Dialogs.materialDialog(
                                 color: Colors.white,
                                 msg:
@@ -224,10 +228,9 @@ class _SingleProductState extends State<SingleProduct> {
                           },
                           icon: Icon(
                             AppIcons.addToCart,
-                            color: _isInCart == 0
+                            color: addedToCart == false
                                 ? kPrimaryColor
-                                : Colors.deepOrange
-                            ,
+                                : Colors.deepOrange,
                           ))
                     ],
                   ),

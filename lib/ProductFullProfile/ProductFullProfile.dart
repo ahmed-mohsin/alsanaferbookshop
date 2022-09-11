@@ -1,12 +1,21 @@
 import 'dart:async';
 
+import 'package:alsanaferbookshop/constants/AppIcons.dart';
 import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:alsanaferbookshop/products.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
+import 'package:provider/provider.dart';
 import 'package:quantity_input/quantity_input.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+
+import '../Cart/CartScreen.dart';
+import '../models/catelog.dart';
+import '../providers/cartProvider.dart';
 
 class ProductFullProfile extends StatefulWidget {
   Product product;
@@ -20,6 +29,13 @@ class ProductFullProfile extends StatefulWidget {
 class _ProductFullProfileState extends State<ProductFullProfile> {
   int simpleIntInput = 1;
 
+  late CartProvider _cartProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _cartProvider = Provider.of<CartProvider>(context, listen: false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +72,8 @@ class _ProductFullProfileState extends State<ProductFullProfile> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: SizedBox(width: MediaQuery.of(context).size.width*.60,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * .60,
                           child: Text(
                             widget.product.name,
                             style: TextStyle(
@@ -106,7 +123,8 @@ class _ProductFullProfileState extends State<ProductFullProfile> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Text(
-                              widget.product.newPriceOfPiece.toString() + ' KW ',
+                              widget.product.newPriceOfPiece.toString() +
+                                  ' KW ',
                               style: TextStyle(
                                   fontWeight: FontWeight.w800,
                                   color: kPrimaryColor,
@@ -151,7 +169,7 @@ class _ProductFullProfileState extends State<ProductFullProfile> {
                           expandText: 'show more',
                           collapseText: 'show less',
                           maxLines: 5,
-                          linkColor:Colors.deepOrange,
+                          linkColor: Colors.deepOrange,
                         ),
                       ),
                       Padding(
@@ -175,14 +193,16 @@ class _ProductFullProfileState extends State<ProductFullProfile> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: ExpandableText(
-                            'Website # 39120 \n Product # C10895',
+                          'Website # 39120 \n Product # C10895',
                           expandText: 'show more',
                           collapseText: 'show less',
                           maxLines: 5,
                           linkColor: kPrimaryColor,
                         ),
                       ),
-                      SizedBox(height: 80,)
+                      SizedBox(
+                        height: 80,
+                      )
                     ],
                   ),
                 ],
@@ -204,7 +224,8 @@ class _ProductFullProfileState extends State<ProductFullProfile> {
                       children: [
                         Spacer(),
                         QuantityInput(
-                            decoration: InputDecoration(counter: Text(' '),
+                            decoration: InputDecoration(
+                                counter: Text(' '),
                                 border: InputBorder.none,
                                 labelStyle: TextStyle(
                                     fontSize: 20,
@@ -223,14 +244,19 @@ class _ProductFullProfileState extends State<ProductFullProfile> {
                                 simpleIntInput =
                                     int.parse(value.replaceAll(',', '')))),
                         Spacer(),
-                        SizedBox(width:MediaQuery.of(context).size.width*.4 ,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .4,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child:  RoundedLoadingButton(width:
-                              MediaQuery.of(context).size.width*.4,color: Colors.deepOrange,borderRadius: 20,
-                              successIcon: Icons.check,successColor: Colors.deepOrange,
+                            child: RoundedLoadingButton(
+                              width: MediaQuery.of(context).size.width * .4,
+                              color: Colors.deepOrange,
+                              borderRadius: 20,
+                              successIcon: Icons.check,
+                              successColor: Colors.deepOrange,
                               failedIcon: Icons.add_circle_outline,
-                              child: Text('ADD TO CART', style: TextStyle(color: Colors.white)),
+                              child: Text('ADD TO CART',
+                                  style: TextStyle(color: Colors.white)),
                               controller: _btnController2,
                               onPressed: () => _doSomething(_btnController2),
                             ),
@@ -245,12 +271,50 @@ class _ProductFullProfileState extends State<ProductFullProfile> {
       ),
     );
   }
+
   final RoundedLoadingButtonController _btnController2 =
-  RoundedLoadingButtonController();
+      RoundedLoadingButtonController();
 
   void _doSomething(RoundedLoadingButtonController controller) async {
-    Timer(Duration(seconds: 1), () {
-      controller.success();
-    });
+    _cartProvider.addToCart(
+        Item(int.parse(widget.product.id), widget.product.name,
+            widget.product.imageUrl, widget.product.newPriceOfPiece),
+        funcQuantity: simpleIntInput);
+    _btnController2.success();
+    Dialogs.bottomMaterialDialog(lottieBuilder: LottieBuilder.asset('assets/cong_example.json')
+        ,msg:
+        'item Added to Cart successfully ,Do you want to navigate to Cart',
+        title: 'Congratulation',
+        context: context,
+        actions: [
+          IconsOutlineButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            text: 'Cancel',
+            iconData: Icons.cancel_outlined,
+            textStyle: TextStyle(color: Colors.grey),
+            iconColor: Colors.grey,
+          ),
+          IconsButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushReplacement(context, CartScreenRoute());
+            },
+            text: 'Go',
+            iconData: AppIcons.addToCart,
+            color: Colors.red,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]);
+    _btnController2.reset();
+  }
+}
+
+class LowerCart extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

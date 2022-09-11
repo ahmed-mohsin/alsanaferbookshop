@@ -1,6 +1,15 @@
+import 'dart:async';
+
+import 'package:alsanaferbookshop/constants/colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:provider/provider.dart';
+import 'package:quantity_input/quantity_input.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../providers/cartProvider.dart';
 
@@ -20,9 +29,12 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('cart'),
+        title: Text(
+          'ELSANAFER CART',
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.blue.shade900,
+        backgroundColor: kPrimaryColor,
       ),
       body: Container(
         color: Colors.white,
@@ -34,7 +46,6 @@ class CartScreen extends StatelessWidget {
                 child: _CartList(),
               ),
             ),
-            const Divider(height: 4, color: Colors.black),
             _CartTotal()
           ],
         ),
@@ -44,18 +55,181 @@ class CartScreen extends StatelessWidget {
 }
 
 class _CartList extends StatelessWidget {
+  int q=0;
   @override
   Widget build(BuildContext context) {
-    var itemNameStyle = Theme.of(context).textTheme.headline6;
     // This gets the current state of CartModel and also tells Flutter
     // to rebuild this widget when CartModel notifies listeners (in other words,
     // when it changes).
     // var cart = context.watch<CartModel>();
     var cartProvider = context.watch<CartProvider>();
-
-    return ListView.builder(
+    return ListView.separated(
       itemCount: cartProvider.flutterCart.cartItem.length,
-      itemBuilder: (context, index) => ListTile(
+      itemBuilder: (context, index) {
+        q=cartProvider.flutterCart.cartItem[index].quantity;
+        return Container(
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * .55,
+                      child: Expanded(
+                        child: Text(
+                          cartProvider.flutterCart.cartItem[index].productName
+                              .toString(),
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'unit Price : ',
+                          style: TextStyle(color: kPrimaryColor),
+                        ),
+                        Text(cartProvider.flutterCart.cartItem[index].unitPrice
+                            .toString() +
+                            ' KW '),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  cartProvider.incrementItemToCartProvider(index);
+                                },
+                                icon: Icon(
+                                  Icons.add_circle,
+                                  size: 20,
+                                  color: Colors.deepOrange,
+                                )),
+                            Text(
+                              cartProvider.flutterCart.cartItem[index].quantity
+                                  .toString(),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w900),
+                            ),
+                            IconButton(
+                                onPressed: () {
+
+                                  Dialogs.bottomMaterialDialog(
+                                      msg:
+                                      'Are you sure? you can\'t undo this action',
+                                      title: 'Delete',
+                                      context: context,
+                                      actions: [
+                                        IconsOutlineButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          text: 'Cancel',
+                                          iconData: Icons.cancel_outlined,
+                                          textStyle: TextStyle(color: Colors.grey),
+                                          iconColor: Colors.grey,
+                                        ),
+                                        IconsButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            cartProvider.deleteItemFromCart(index);
+                                          },
+                                          text: 'Delete',
+                                          iconData: Icons.delete,
+                                          color: Colors.red,
+                                          textStyle: TextStyle(color: Colors.white),
+                                          iconColor: Colors.white,
+                                        ),
+                                      ]);
+
+                                  cartProvider
+                                      .decrementItemFromCartProvider(index);
+                                },
+                                icon: Icon(
+                                  Icons.remove_circle,
+                                  size: 20,
+                                  color: Colors.deepOrange,
+                                ))
+                          ],
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              Dialogs.bottomMaterialDialog(
+                                  msg:
+                                  'Are you sure? you can\'t undo this action',
+                                  title: 'Delete',
+                                  context: context,
+                                  actions: [
+                                    IconsOutlineButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      text: 'Cancel',
+                                      iconData: Icons.cancel_outlined,
+                                      textStyle: TextStyle(color: Colors.grey),
+                                      iconColor: Colors.grey,
+                                    ),
+                                    IconsButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        cartProvider.deleteItemFromCart(index);
+                                      },
+                                      text: 'Delete',
+                                      iconData: Icons.delete,
+                                      color: Colors.red,
+                                      textStyle: TextStyle(color: Colors.white),
+                                      iconColor: Colors.white,
+                                    ),
+                                  ]);
+                            },
+                            icon: Icon(
+                              Icons.delete_outline_rounded,
+                              size: 20,
+                              color: Colors.deepOrange,
+                            ))
+                      ],
+                    )
+                  ],
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: CachedNetworkImage(
+                        imageUrl: cartProvider
+                            .flutterCart.cartItem[index].productDetails,
+                        fit: BoxFit.fill,
+                        width: MediaQuery.of(context).size.width * .25,
+                        height: MediaQuery.of(context).size.height * .10,
+                        placeholder: (context, url) =>
+                            Container(height: 20, width: 20, child: Container()),
+                        errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ));
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider();
+      },
+    );
+  }
+/*ListTile(
         //leading: const Icon(Icons.done),
         trailing: IconButton(
           icon: const Icon(Icons.delete),
@@ -76,38 +250,74 @@ class _CartList extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
+      )*/
 }
 
 class _CartTotal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var hugeStyle =
-        Theme.of(context).textTheme.headline1!.copyWith(fontSize: 48);
-    return SizedBox(
-      height: 200,
-      child: Center(
+        Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20);
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border:
+              Border(top: BorderSide(color: Colors.grey.shade300, width: 1))),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Consumer<CartProvider>(
-                builder: (context, cart, child) => Text(
-                    '\$${cart.getTotalAmount().toString()}',
-                    style: hugeStyle)),
-            const SizedBox(width: 24),
-            TextButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Buying not supported yet.')));
-              },
-              style: TextButton.styleFrom(primary: Colors.white),
-              child: const Text('BUY'),
+                builder: (context, cart, child) => Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            'Total Price',
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w900),
+                          ),
+                        ),
+                        Text(
+                            '${cart.getTotalAmount().ceilToDouble().toString()} KW',
+                            style: hugeStyle),
+                      ],
+                    )),
+            Spacer(),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .4,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RoundedLoadingButton(
+                  width: MediaQuery.of(context).size.width * .4,
+                  color: Colors.deepOrange,
+                  borderRadius: 10,
+                  successIcon: Icons.check,
+                  successColor: Colors.deepOrange,
+                  failedIcon: Icons.add_circle_outline,
+                  child:
+                      Text('Check OUT', style: TextStyle(color: Colors.white)),
+                  controller: _btnController2,
+                  onPressed: () => _doSomething(_btnController2),
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  final RoundedLoadingButtonController _btnController2 =
+      RoundedLoadingButtonController();
+
+  void _doSomething(RoundedLoadingButtonController controller) async {
+    Timer(Duration(seconds: 1), () {
+      controller.success();
+    });
   }
 }
