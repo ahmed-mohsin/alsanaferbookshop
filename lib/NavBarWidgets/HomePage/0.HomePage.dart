@@ -20,8 +20,8 @@ class HomePage extends StatelessWidget {
       child: Column(children:  [
         const SizedBox(height: 8,),
         const HomePageSlider(),
-        const SizedBox(height: 8,),
-        Deals(),
+        //const SizedBox(height: 8,),
+        //Deals(),
         const SizedBox(height: 8,),
         Categories(),
         const SizedBox(height: 8,),

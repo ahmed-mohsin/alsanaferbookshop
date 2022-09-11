@@ -3,6 +3,7 @@ import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:alsanaferbookshop/coustomRoute.dart';
 import 'package:alsanaferbookshop/models/catelog.dart';
 import 'package:alsanaferbookshop/navbar.dart';
+import 'package:alsanaferbookshop/products.dart';
 import 'package:alsanaferbookshop/providers/cartProvider.dart';
 import 'package:badges/badges.dart';
 import 'package:device_preview/device_preview.dart';
@@ -97,14 +98,11 @@ class _HomeState extends State<Home> {
     const Text('Requests'),
   ];
 
-  //String label = "Some Label";
-  List dummyList = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+  List dummyList = [];
   TextEditingController myController = TextEditingController();
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is removed from the
-    // widget tree.
     myController.dispose();
     super.dispose();
   }
@@ -113,7 +111,21 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     // Start listening to changes.
+    //dummyList=[];
+    products.forEach((element) {
+      dummyList.add(element.name.toLowerCase());
+    });
+    BacktoScoolPoducts.forEach((element) {
+      dummyList.add(element.name.toLowerCase());
+    });
+    favoriteProducts.forEach((element) {
+      dummyList.add(element.name.toLowerCase());
+    });
+
     myController.addListener(_printLatestValue);
+    if(myController.text.isEmpty){
+      print('hh');
+    }
   }
 
   _printLatestValue() {
@@ -141,16 +153,14 @@ class _HomeState extends State<Home> {
                     animationDuration: Duration(milliseconds: 300),
                     animationType: BadgeAnimationType.slide,
                     badgeContent: Text(
-                      consumer
-                          .getCartItems()
-                          .length
-                          .toString(),
+                      consumer.getCartItems().length.toString(),
                       style: TextStyle(color: Colors.white),
                     ),
-                    child:
-                    IconButton(icon: Icon(AppIcons.cart), onPressed: () {
-                      Navigator.push(context, CartScreenRoute());
-                    }),
+                    child: IconButton(
+                        icon: Icon(AppIcons.cart),
+                        onPressed: () {
+                          Navigator.push(context, CartScreenRoute());
+                        }),
                   );
                 },
               )
@@ -169,7 +179,7 @@ class _HomeState extends State<Home> {
                           hintText: 'search',
                           border: InputBorder.none,
                           contentPadding:
-                          EdgeInsets.only(left: 4, right: 4, bottom: 8)),
+                              EdgeInsets.only(left: 4, right: 4, bottom: 8)),
                       initialList: dummyList,
                       minStringLength: 2,
                       label: ' ',
@@ -200,9 +210,8 @@ class _HomeState extends State<Home> {
         showSelectedLabels: false,
         backgroundColor: Colors.white,
         selectedIconTheme: IconThemeData(color: kPrimaryColor),
-        unselectedIconTheme: IconThemeData(
-            color: Colors.grey.shade400, size: 30),
-
+        unselectedIconTheme:
+            IconThemeData(color: Colors.grey.shade400, size: 30),
         showUnselectedLabels: false,
         selectedFontSize: 0,
         unselectedFontSize: 0,
@@ -234,29 +243,24 @@ class _HomeState extends State<Home> {
                 duration: Duration(microseconds: 1),
                 child: Consumer<CartProvider>(
                   builder: (context, consumer, child) {
-                    return consumer
-                        .getCartItems()
-                        .isEmpty
+                    return consumer.getCartItems().isEmpty
                         ? Icon(
-                      AppIcons.cart,
-                      size: 30,
-                    )
+                            AppIcons.cart,
+                            size: 30,
+                          )
                         : Badge(
-                      position: BadgePosition.topEnd(top: -12, end: -12),
-                      animationDuration: Duration(milliseconds: 300),
-                      animationType: BadgeAnimationType.fade,
-                      badgeContent: Text(
-                        consumer
-                            .getCartItems()
-                            .length
-                            .toString(),
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      child: Icon(
-                        AppIcons.cart,
-                        size: 30,
-                      ),
-                    );
+                            position: BadgePosition.topEnd(top: -12, end: -12),
+                            animationDuration: Duration(milliseconds: 300),
+                            animationType: BadgeAnimationType.fade,
+                            badgeContent: Text(
+                              consumer.getCartItems().length.toString(),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            child: Icon(
+                              AppIcons.cart,
+                              size: 30,
+                            ),
+                          );
                   },
                 ),
               ),

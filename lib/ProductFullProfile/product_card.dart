@@ -55,7 +55,8 @@ class _SingleProductState extends State<SingleProduct> {
 
   @override
   Widget build(BuildContext context) {
-   // _isInCart = _checkItemisInCart();
+    _isInCart = _checkItemisInCart();
+    print(_isInCart);
     return Container(
       width: MediaQuery.of(context).size.width * .48,
       decoration: BoxDecoration(
@@ -223,9 +224,10 @@ class _SingleProductState extends State<SingleProduct> {
                           },
                           icon: Icon(
                             AppIcons.addToCart,
-                            color: addedToCart == true
-                                ? Colors.deepOrange
-                                : kPrimaryColor,
+                            color: _isInCart == 0
+                                ? kPrimaryColor
+                                : Colors.deepOrange
+                            ,
                           ))
                     ],
                   ),
