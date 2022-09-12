@@ -231,34 +231,15 @@ class _HomeState extends State<Home> {
             ),
           ),
           BottomNavigationBarItem(
-            label: 'd',
+            label: 'null',
             icon: Padding(
               padding: const EdgeInsets.all(0),
               child: AnimatedContainer(
-                duration: Duration(microseconds: 1),
-                child: Consumer<CartProvider>(
-                  builder: (context, consumer, child) {
-                    return consumer.getCartItems().isEmpty
-                        ? Icon(
-                            AppIcons.cart,
-                            size: 30,
-                          )
-                        : Badge(
-                            position: BadgePosition.topEnd(top: -12, end: -12),
-                            animationDuration: Duration(milliseconds: 300),
-                            animationType: BadgeAnimationType.fade,
-                            badgeContent: Text(
-                              consumer.getCartItems().length.toString(),
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            child: Icon(
-                              AppIcons.cart,
-                              size: 30,
-                            ),
-                          );
-                  },
-                ),
-              ),
+                  duration: Duration(microseconds: 1),
+                  child: Icon(
+                    AppIcons.addToFavoriteLine,
+                    size: 30,
+                  )),
             ),
           ),
           BottomNavigationBarItem(

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:alsanaferbookshop/Cart/checkOut.dart';
 import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,7 +56,7 @@ class CartScreen extends StatelessWidget {
 }
 
 class _CartList extends StatelessWidget {
-  int q=0;
+
   @override
   Widget build(BuildContext context) {
     // This gets the current state of CartModel and also tells Flutter
@@ -66,7 +67,6 @@ class _CartList extends StatelessWidget {
     return ListView.separated(
       itemCount: cartProvider.flutterCart.cartItem.length,
       itemBuilder: (context, index) {
-        q=cartProvider.flutterCart.cartItem[index].quantity;
         return Container(
             width: MediaQuery.of(context).size.width,
             child: Row(
@@ -94,7 +94,7 @@ class _CartList extends StatelessWidget {
                           style: TextStyle(color: kPrimaryColor),
                         ),
                         Text(cartProvider.flutterCart.cartItem[index].unitPrice
-                            .toString() +
+                                .toString() +
                             ' KW '),
                       ],
                     ),
@@ -104,7 +104,8 @@ class _CartList extends StatelessWidget {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  cartProvider.incrementItemToCartProvider(index);
+                                  cartProvider
+                                      .incrementItemToCartProvider(index);
                                 },
                                 icon: Icon(
                                   Icons.add_circle,
@@ -119,10 +120,9 @@ class _CartList extends StatelessWidget {
                             ),
                             IconButton(
                                 onPressed: () {
-
                                   Dialogs.bottomMaterialDialog(
                                       msg:
-                                      'Are you sure? you can\'t undo this action',
+                                          'Are you sure? you can\'t undo this action',
                                       title: 'Delete',
                                       context: context,
                                       actions: [
@@ -132,18 +132,21 @@ class _CartList extends StatelessWidget {
                                           },
                                           text: 'Cancel',
                                           iconData: Icons.cancel_outlined,
-                                          textStyle: TextStyle(color: Colors.grey),
+                                          textStyle:
+                                              TextStyle(color: Colors.grey),
                                           iconColor: Colors.grey,
                                         ),
                                         IconsButton(
                                           onPressed: () {
                                             Navigator.pop(context);
-                                            cartProvider.deleteItemFromCart(index);
+                                            cartProvider
+                                                .deleteItemFromCart(index);
                                           },
                                           text: 'Delete',
                                           iconData: Icons.delete,
                                           color: Colors.red,
-                                          textStyle: TextStyle(color: Colors.white),
+                                          textStyle:
+                                              TextStyle(color: Colors.white),
                                           iconColor: Colors.white,
                                         ),
                                       ]);
@@ -162,7 +165,7 @@ class _CartList extends StatelessWidget {
                             onPressed: () {
                               Dialogs.bottomMaterialDialog(
                                   msg:
-                                  'Are you sure? you can\'t undo this action',
+                                      'Are you sure? you can\'t undo this action',
                                   title: 'Delete',
                                   context: context,
                                   actions: [
@@ -211,10 +214,10 @@ class _CartList extends StatelessWidget {
                         fit: BoxFit.fill,
                         width: MediaQuery.of(context).size.width * .25,
                         height: MediaQuery.of(context).size.height * .10,
-                        placeholder: (context, url) =>
-                            Container(height: 20, width: 20, child: Container()),
+                        placeholder: (context, url) => Container(
+                            height: 20, width: 20, child: Container()),
                         errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                            const Icon(Icons.error),
                       ),
                     ),
                   ),
@@ -297,10 +300,17 @@ class _CartTotal extends StatelessWidget {
                   successIcon: Icons.check,
                   successColor: Colors.deepOrange,
                   failedIcon: Icons.add_circle_outline,
-                  child:
-                      Text('Check OUT', style: TextStyle(color: Colors.white)),
+                  child: Text('PROCEED TO BUY',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w600)),
                   controller: _btnController2,
-                  onPressed: () => _doSomething(_btnController2),
+                  onPressed: () {
+                    Timer(Duration(milliseconds: 3), () {
+                      _btnController2.reset();
+                      Navigator.push(context, CheckOutScreenRoute());
+                      _btnController2.reset();
+                    });
+                  },
                 ),
               ),
             ),
@@ -312,10 +322,4 @@ class _CartTotal extends StatelessWidget {
 
   final RoundedLoadingButtonController _btnController2 =
       RoundedLoadingButtonController();
-
-  void _doSomething(RoundedLoadingButtonController controller) async {
-    Timer(Duration(seconds: 1), () {
-      controller.success();
-    });
-  }
 }
