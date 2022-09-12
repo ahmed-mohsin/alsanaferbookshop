@@ -8,7 +8,7 @@ import 'NavBarWidgets/HomePage/0.HomePage.dart';
 class OnBoardingScreen extends StatelessWidget {
   final List<Introduction> list = [
     Introduction(
-      title: 'Buy & Sell',
+      title: 'Buy',
       subTitle: 'Browse the menu and order directly from the application',
       imageUrl: 'assets/images/logo.png',
     ),
@@ -19,7 +19,7 @@ class OnBoardingScreen extends StatelessWidget {
     ),
     Introduction(
       title: 'Receive Money',
-      subTitle: 'Pick up delivery at your door and enjoy groceries',
+      subTitle: 'Pick up delivery at your door',
       imageUrl: 'assets/images/3.png',
     ),
     Introduction(
@@ -28,8 +28,8 @@ class OnBoardingScreen extends StatelessWidget {
       imageUrl: 'assets/images/5.png',
     ),
     Introduction(
-      title: 'Finish',
-      subTitle: 'Browse the menu and order directly from the application',
+      title: 'save',
+      subTitle: 'Order Now your first order and get start discount up to 20 %',
       imageUrl: 'assets/images/6.png',
     ),
   ];

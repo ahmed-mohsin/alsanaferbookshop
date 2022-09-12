@@ -215,10 +215,10 @@ class _CheckOutState extends State<CheckOut> {
                         },
                       ),
                       RadioListTile(
-                        value: PaymentMethod.Credit,
+                        value: PaymentMethod.GiftCard,
                         groupValue: payMethod,
                         title: const Text(
-                          'Credit Card',
+                          'GiftCard',
                           style: TextStyle(fontSize: 15),
                         ),
                         onChanged: (value) {
@@ -228,10 +228,10 @@ class _CheckOutState extends State<CheckOut> {
                         },
                       ),
                       RadioListTile(
-                        value: PaymentMethod.GiftCard,
+                        value: PaymentMethod.Credit,
                         groupValue: payMethod,
                         title: const Text(
-                          'GiftCard',
+                          'Credit Card',
                           style: TextStyle(fontSize: 15),
                         ),
                         onChanged: (value) {
@@ -249,65 +249,69 @@ class _CheckOutState extends State<CheckOut> {
               ],
             ),
           ),
-          Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                width: MediaQuery.of(context).size.width,height: 80,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border(
-                        top: BorderSide(
-                            color: Colors.grey.shade300, width: 1))),
-                child: Center(
-                  child: RoundedLoadingButton(
-                    width: MediaQuery.of(context).size.width*.8 ,
-                    color: Colors.deepOrange,
-                    borderRadius: 20,
-                    successIcon: Icons.check,
-                    successColor: Colors.deepOrange,
-                    failedIcon: Icons.add_circle_outline,
-                    child: Text('Place Order',
-                        style: TextStyle(color: Colors.white)),
-                    controller: _btnController2,
-                    onPressed: () => _doSomething(_btnController2),
-                  ),
-                ),
-              ))
+          Consumer<CartProvider>(
+            builder: (context, consumer, child) {
+              return Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,height: 80,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border(
+                            top: BorderSide(
+                                color: Colors.grey.shade300, width: 1))),
+                    child: Center(
+                      child: RoundedLoadingButton(
+                        width: MediaQuery.of(context).size.width*.8 ,
+                        color: Colors.deepOrange,
+                        borderRadius: 20,
+                        successIcon: Icons.check,
+                        successColor: Colors.deepOrange,
+                        failedIcon: Icons.add_circle_outline,
+                        child: Text('Place Order',
+                            style: TextStyle(color: Colors.white)),
+                        controller: _btnController2,
+                        onPressed: () async {
+                          consumer.deleteAllCartProvider();
+                          _btnController2.success();
+                          Dialogs.bottomMaterialDialog(lottieBuilder: LottieBuilder.asset('assets/cong_example.json')
+                              ,msg:
+                              'Congratulation Your order Placed , have a nice day , and hope to see you again',
+                              title: 'Congratulation',
+                              context: context,
+                              actions: [
+                                IconsOutlineButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  text: 'My Orders',
+                                  iconData: Icons.cancel_outlined,
+                                  textStyle: TextStyle(color: Colors.grey),
+                                  iconColor: Colors.grey,
+                                ),
+                                IconsButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(context, HomeScreenRoute());
+                                  },
+                                  text: 'Home',
+                                  iconData: AppIcons.home,
+                                  color: Colors.red,
+                                  textStyle: TextStyle(color: Colors.white),
+                                  iconColor: Colors.white,
+                                ),
+                              ]);
+                          _btnController2.reset();
+                        },
+                      ),
+                    ),
+                  ));
+            },
+          )
+
 
         ],
       ),
     );
-  }
-  void _doSomething(RoundedLoadingButtonController controller) async {
-
-    _btnController2.success();
-    Dialogs.bottomMaterialDialog(lottieBuilder: LottieBuilder.asset('assets/cong_example.json')
-        ,msg:
-        'Congratulation Your order Placed , have a nice day , and hope to see you again',
-        title: 'Congratulation',
-        context: context,
-        actions: [
-          IconsOutlineButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            text: 'My Orders',
-            iconData: Icons.cancel_outlined,
-            textStyle: TextStyle(color: Colors.grey),
-            iconColor: Colors.grey,
-          ),
-          IconsButton(
-            onPressed: () {
-              Navigator.pushReplacement(context, HomeScreenRoute());
-            },
-            text: 'Home',
-            iconData: AppIcons.home,
-            color: Colors.red,
-            textStyle: TextStyle(color: Colors.white),
-            iconColor: Colors.white,
-          ),
-        ]);
-    _btnController2.reset();
   }
   final RoundedLoadingButtonController _btnController2 =
   RoundedLoadingButtonController();

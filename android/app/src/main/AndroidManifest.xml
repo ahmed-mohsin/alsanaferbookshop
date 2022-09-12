@@ -2,9 +2,9 @@
     package="com.alsanafer.alsanaferbookshop">
     <uses-permission android:name="android.permission.INTERNET"/> <!-- Add this -->
     <application
-        android:label="alsanaferbookshop"
+        android:label="Alsanafer"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

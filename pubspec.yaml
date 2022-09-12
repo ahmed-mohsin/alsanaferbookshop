@@ -58,6 +58,7 @@ dependencies:
   line_awesome_flutter: ^2.0.0
   equatable: ^2.0.5
   flutter_credit_card: ^3.0.3
+  flutter_launcher_icons: ^0.10.0
 
 dev_dependencies:
   flutter_test:
@@ -128,10 +129,14 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_native_splash:
   color: "#ffffff"
-  image: assets/images/logo.png
-
+  image: assets/images/2.png
   android_12:
-    image: assets/images/logo.png
+    image: assets/images/2.png
     icon_background_color: "#ffffff"
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/2.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 

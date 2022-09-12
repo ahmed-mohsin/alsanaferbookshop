@@ -120,36 +120,7 @@ class _CartList extends StatelessWidget {
                             ),
                             IconButton(
                                 onPressed: () {
-                                  Dialogs.bottomMaterialDialog(
-                                      msg:
-                                          'Are you sure? you can\'t undo this action',
-                                      title: 'Delete',
-                                      context: context,
-                                      actions: [
-                                        IconsOutlineButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          text: 'Cancel',
-                                          iconData: Icons.cancel_outlined,
-                                          textStyle:
-                                              TextStyle(color: Colors.grey),
-                                          iconColor: Colors.grey,
-                                        ),
-                                        IconsButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                            cartProvider
-                                                .deleteItemFromCart(index);
-                                          },
-                                          text: 'Delete',
-                                          iconData: Icons.delete,
-                                          color: Colors.red,
-                                          textStyle:
-                                              TextStyle(color: Colors.white),
-                                          iconColor: Colors.white,
-                                        ),
-                                      ]);
+
 
                                   cartProvider
                                       .decrementItemFromCartProvider(index);
