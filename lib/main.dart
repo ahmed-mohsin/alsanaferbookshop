@@ -3,8 +3,6 @@ import 'dart:ffi';
 import 'package:alsanaferbookshop/Boarding.dart';
 import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:alsanaferbookshop/coustomRoute.dart';
-import 'package:alsanaferbookshop/models/catelog.dart';
-import 'package:alsanaferbookshop/navbar.dart';
 import 'package:alsanaferbookshop/products.dart';
 import 'package:alsanaferbookshop/providers/cartProvider.dart';
 import 'package:badges/badges.dart';
