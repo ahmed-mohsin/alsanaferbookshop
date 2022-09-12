@@ -254,7 +254,13 @@ class _CartList extends StatelessWidget {
       )*/
 }
 
-class _CartTotal extends StatelessWidget {
+class _CartTotal extends StatefulWidget {
+  @override
+  State<_CartTotal> createState() => _CartTotalState();
+}
+
+class _CartTotalState extends State<_CartTotal> {
+
   @override
   Widget build(BuildContext context) {
     var hugeStyle =
@@ -322,4 +328,10 @@ class _CartTotal extends StatelessWidget {
 
   final RoundedLoadingButtonController _btnController2 =
       RoundedLoadingButtonController();
+
+  @override
+  void dispose() {
+    _btnController2.reset();
+    super.dispose();
+  }
 }

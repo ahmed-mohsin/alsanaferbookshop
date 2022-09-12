@@ -1,12 +1,21 @@
+import 'dart:async';
+
 import 'package:alsanaferbookshop/constants/colors.dart';
+import 'package:alsanaferbookshop/main.dart';
 import 'package:alsanaferbookshop/providers/cartProvider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/custom_card_type_icon.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
+
+import '../constants/AppIcons.dart';
 
 class CheckOutScreenRoute extends CupertinoPageRoute {
   CheckOutScreenRoute() : super(builder: (BuildContext context) => CheckOut());
@@ -55,185 +64,307 @@ class _CheckOutState extends State<CheckOut> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Order Items',
-                    style: TextStyle(
-                        color: kPrimaryColor, fontWeight: FontWeight.bold),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Order Items',
+                        style: TextStyle(
+                            color: kPrimaryColor, fontWeight: FontWeight.bold),
+                      ),
+                      _CartList(),
+                    ],
                   ),
-                  _CartList(),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 4,
-                color: Colors.grey.shade100,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Delivery Method',
-                    style: TextStyle(
-                        color: kPrimaryColor, fontWeight: FontWeight.bold),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 4,
+                    color: Colors.grey.shade100,
                   ),
-                  RadioListTile(
-                    value: DeliveryMethod.Pickup,
-                    groupValue: deliveryMethod,
-                    title: const Text(
-                      'Pick Up',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        deliveryMethod = value!;
-                      });
-                    },
-                  ),
-                  RadioListTile(
-                    value: DeliveryMethod.Delivery,
-                    groupValue: deliveryMethod,
-                    title: const Text(
-                      'Delivery',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        deliveryMethod = value!;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 4,
-                color: Colors.grey.shade100,
-              ),
-            ),
-            deliveryMethod != DeliveryMethod.Delivery
-                ? Container()
-                : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Choose Address',
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.bold),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Delivery Method',
+                        style: TextStyle(
+                            color: kPrimaryColor, fontWeight: FontWeight.bold),
+                      ),
+                      RadioListTile(
+                        value: DeliveryMethod.Pickup,
+                        groupValue: deliveryMethod,
+                        title: const Text(
+                          'Pick Up',
+                          style: TextStyle(fontSize: 15),
                         ),
-                        RadioListTile(
-                          value: Address.Address1,
-                          groupValue: add,
-                          title: const Text(
-                            'Adress1',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              add = value!;
-                            });
-                          },
+                        onChanged: (value) {
+                          setState(() {
+                            deliveryMethod = value!;
+                          });
+                        },
+                      ),
+                      RadioListTile(
+                        value: DeliveryMethod.Delivery,
+                        groupValue: deliveryMethod,
+                        title: const Text(
+                          'Delivery',
+                          style: TextStyle(fontSize: 15),
                         ),
-                        RadioListTile(
-                          value: Address.Adress2,
-                          groupValue: add,
-                          title: const Text(
-                            'Adress2',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              add = value!;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                        onChanged: (value) {
+                          setState(() {
+                            deliveryMethod = value!;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 4,
+                    color: Colors.grey.shade100,
+                  ),
+                ),
+                deliveryMethod != DeliveryMethod.Delivery
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Choose Address',
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            RadioListTile(
+                              value: Address.Address1,
+                              groupValue: add,
+                              title: const Text(
+                                'Adress1',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  add = value!;
+                                });
+                              },
+                            ),
+                            RadioListTile(
+                              value: Address.Adress2,
+                              groupValue: add,
+                              title: const Text(
+                                'Adress2',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  add = value!;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                deliveryMethod != DeliveryMethod.Delivery
+                    ? Container()
+                    :Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 4,
+                    color: Colors.grey.shade100,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Payment Method',
+                        style: TextStyle(
+                            color: kPrimaryColor, fontWeight: FontWeight.bold),
+                      ),
+                      RadioListTile(
+                        value: PaymentMethod.Cash,
+                        groupValue: payMethod,
+                        title: const Text(
+                          'Cash',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            payMethod = value!;
+                          });
+                        },
+                      ),
+                      RadioListTile(
+                        value: PaymentMethod.Credit,
+                        groupValue: payMethod,
+                        title: const Text(
+                          'Credit Card',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            payMethod = value!;
+                          });
+                        },
+                      ),
+                      RadioListTile(
+                        value: PaymentMethod.GiftCard,
+                        groupValue: payMethod,
+                        title: const Text(
+                          'GiftCard',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            payMethod = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                payMethod != PaymentMethod.Credit ? Container() : CredCardWidget(),
+                payMethod != PaymentMethod.GiftCard ? Container() : GiftCardWidget(),
+                SizedBox(height: 100)
+              ],
+            ),
+          ),
+          Align(
+              alignment: Alignment.bottomCenter,
               child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 4,
-                color: Colors.grey.shade100,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Payment Method',
-                    style: TextStyle(
-                        color: kPrimaryColor, fontWeight: FontWeight.bold),
+                width: MediaQuery.of(context).size.width,height: 80,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border(
+                        top: BorderSide(
+                            color: Colors.grey.shade300, width: 1))),
+                child: Center(
+                  child: RoundedLoadingButton(
+                    width: MediaQuery.of(context).size.width*.8 ,
+                    color: Colors.deepOrange,
+                    borderRadius: 20,
+                    successIcon: Icons.check,
+                    successColor: Colors.deepOrange,
+                    failedIcon: Icons.add_circle_outline,
+                    child: Text('Place Order',
+                        style: TextStyle(color: Colors.white)),
+                    controller: _btnController2,
+                    onPressed: () => _doSomething(_btnController2),
                   ),
-                  RadioListTile(
-                    value: PaymentMethod.Cash,
-                    groupValue: payMethod,
-                    title: const Text(
-                      'Cash',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        payMethod = value!;
-                      });
-                    },
-                  ),
-                  RadioListTile(
-                    value: PaymentMethod.Credit,
-                    groupValue: payMethod,
-                    title: const Text(
-                      'Credit Card',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        payMethod = value!;
-                      });
-                    },
-                  ),
-                  RadioListTile(
-                    value: PaymentMethod.GiftCard,
-                    groupValue: payMethod,
-                    title: const Text(
-                      'GiftCard',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        payMethod = value!;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-            payMethod != PaymentMethod.Credit ? Container() : CredCardWidget()
-          ],
-        ),
+                ),
+              ))
+
+        ],
       ),
+    );
+  }
+  void _doSomething(RoundedLoadingButtonController controller) async {
+
+    _btnController2.success();
+    Dialogs.bottomMaterialDialog(lottieBuilder: LottieBuilder.asset('assets/cong_example.json')
+        ,msg:
+        'Congratulation Your order Placed , have a nice day , and hope to see you again',
+        title: 'Congratulation',
+        context: context,
+        actions: [
+          IconsOutlineButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            text: 'My Orders',
+            iconData: Icons.cancel_outlined,
+            textStyle: TextStyle(color: Colors.grey),
+            iconColor: Colors.grey,
+          ),
+          IconsButton(
+            onPressed: () {
+              Navigator.pushReplacement(context, HomeScreenRoute());
+            },
+            text: 'Home',
+            iconData: AppIcons.home,
+            color: Colors.red,
+            textStyle: TextStyle(color: Colors.white),
+            iconColor: Colors.white,
+          ),
+        ]);
+    _btnController2.reset();
+  }
+  final RoundedLoadingButtonController _btnController2 =
+  RoundedLoadingButtonController();
+}
+class GiftCardWidget extends StatefulWidget {
+  const GiftCardWidget({Key? key}) : super(key: key);
+
+  @override
+  State<GiftCardWidget> createState() => _GiftCardWidgetState();
+}
+
+class _GiftCardWidgetState extends State<GiftCardWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Form(child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+            keyboardType: TextInputType.text,
+            autofocus: false,
+            textAlign: TextAlign.start,
+            textInputAction: TextInputAction.done,
+            style: TextStyle(
+                color: Colors.black87,
+                fontSize: 18,
+                fontWeight: FontWeight.w500),
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(2.0),
+                borderSide: BorderSide(
+                  color: kPrimaryColor,
+                  width: 1.0,
+                ),
+              ),
+              contentPadding: EdgeInsets.symmetric(vertical: 15,horizontal: 15),
+              labelText: '   Gift Card Number',
+              hintStyle: TextStyle(
+                  color: Colors.deepOrange,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500),
+              labelStyle: TextStyle(
+                  color: Colors.deepOrange,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.deepOrange, width: 1)),
+            ),
+          ),
+        )),
+
     );
   }
 }
@@ -298,51 +429,54 @@ class _CredCardWidgetState extends State<CredCardWidget> {
           ],
         ),
 
-        CreditCardForm(
-          formKey: formKey,
-          obscureCvv: true,
-          obscureNumber: true,
-          cardNumber: cardNumber,
-          cvvCode: cvvCode,
-          isHolderNameVisible: true,
-          isCardNumberVisible: true,
-          isExpiryDateVisible: true,
-          cardHolderName: cardHolderName,
-          expiryDate: expiryDate,
-          themeColor: kPrimaryColor,
-          textColor: kPrimaryColor,
-          cardNumberDecoration: InputDecoration(
-            labelText: 'Number',
-            hintText: 'XXXX XXXX XXXX XXXX',
-            hintStyle: const TextStyle(color: kPrimaryColor),
-            labelStyle: const TextStyle(color: kPrimaryColor),
-            focusedBorder: border,
-            enabledBorder: border,
+        Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: CreditCardForm(
+            formKey: formKey,
+            obscureCvv: true,
+            obscureNumber: true,
+            cardNumber: cardNumber,
+            cvvCode: cvvCode,
+            isHolderNameVisible: true,
+            isCardNumberVisible: true,
+            isExpiryDateVisible: true,
+            cardHolderName: cardHolderName,
+            expiryDate: expiryDate,
+            themeColor: kPrimaryColor,
+            textColor: kPrimaryColor,
+            cardNumberDecoration: InputDecoration(
+              labelText: 'Number',
+              hintText: 'XXXX XXXX XXXX XXXX',
+              hintStyle: const TextStyle(color: kPrimaryColor),
+              labelStyle: const TextStyle(color: kPrimaryColor),
+              focusedBorder: border,
+              enabledBorder: border,
+            ),
+            expiryDateDecoration: InputDecoration(
+              hintStyle: const TextStyle(color: kPrimaryColor),
+              labelStyle: const TextStyle(color: kPrimaryColor),
+              focusedBorder: border,
+              enabledBorder: border,
+              labelText: 'Expired Date',
+              hintText: 'XX/XX',
+            ),
+            cvvCodeDecoration: InputDecoration(
+              hintStyle: const TextStyle(color: kPrimaryColor),
+              labelStyle: const TextStyle(color: kPrimaryColor),
+              focusedBorder: border,
+              enabledBorder: border,
+              labelText: 'CVV',
+              hintText: 'XXX',
+            ),
+            cardHolderDecoration: InputDecoration(
+              hintStyle: const TextStyle(color: kPrimaryColor),
+              labelStyle: const TextStyle(color: kPrimaryColor),
+              focusedBorder: border,
+              enabledBorder: border,
+              labelText: 'Card Holder',
+            ),
+            onCreditCardModelChange: onCreditCardModelChange,
           ),
-          expiryDateDecoration: InputDecoration(
-            hintStyle: const TextStyle(color: kPrimaryColor),
-            labelStyle: const TextStyle(color: kPrimaryColor),
-            focusedBorder: border,
-            enabledBorder: border,
-            labelText: 'Expired Date',
-            hintText: 'XX/XX',
-          ),
-          cvvCodeDecoration: InputDecoration(
-            hintStyle: const TextStyle(color: kPrimaryColor),
-            labelStyle: const TextStyle(color: kPrimaryColor),
-            focusedBorder: border,
-            enabledBorder: border,
-            labelText: 'CVV',
-            hintText: 'XXX',
-          ),
-          cardHolderDecoration: InputDecoration(
-            hintStyle: const TextStyle(color: kPrimaryColor),
-            labelStyle: const TextStyle(color: kPrimaryColor),
-            focusedBorder: border,
-            enabledBorder: border,
-            labelText: 'Card Holder',
-          ),
-          onCreditCardModelChange: onCreditCardModelChange,
         ),
 
 
@@ -432,7 +566,7 @@ class _CartList extends StatelessWidget {
                                     fontWeight: FontWeight.w600),
                               ),
                               Text(
-                                'Quiantity :  ' +
+                                'Quantity :  ' +
                                     cartProvider
                                         .flutterCart.cartItem[index].quantity
                                         .toString(),

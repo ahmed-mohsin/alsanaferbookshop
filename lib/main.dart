@@ -75,6 +75,18 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class HomeScreenRoute extends CupertinoPageRoute {
+  HomeScreenRoute()
+      : super(builder: (BuildContext context) => new Home());
+
+  @override
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
+    return new FadeTransition(opacity: animation, child: new Home());
+  }
+}
+
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
