@@ -114,15 +114,15 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
               SizedBox(
                 height: 40,
               ),
-             Text('WELCOME-TO',style: TextStyle(fontSize: 20),),
+             Text('WELCOME TO',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w900,color: kPrimaryColor),),
               const SizedBox(height: 16.0),
               FlipFraseBoard(
                 flipType: FlipType.middleFlip,
                 axis: Axis.horizontal,
-                startLetter: 'A',maxFlipDelay: 400,
+                startLetter: 'A',maxFlipDelay: 200,
                 endFrase: 'ELSANAFER',
                 fontSize: 30.0,
-                hingeWidth: 0.4,
+                hingeWidth: 0.4,minFlipDelay: 100,
                 hingeColor: Colors.black,
                 borderColor: Colors.black,
                 endColors: _flutterEndColrs,
@@ -134,7 +134,7 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
               FlipFraseBoard(
                 flipType: FlipType.middleFlip,
                 axis: Axis.vertical,
-                startLetter: 'A',maxFlipDelay: 700,
+                startLetter: 'A',maxFlipDelay: 500,
                 endFrase: 'BOOKSTORE',minFlipDelay: 100,
                 fontSize: 20.0,
                 hingeWidth: 0.6,
