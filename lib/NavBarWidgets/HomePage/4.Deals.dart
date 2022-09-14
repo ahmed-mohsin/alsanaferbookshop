@@ -3,6 +3,7 @@ import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:alsanaferbookshop/products.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:flip_board/flip_clock.dart';
 import 'package:flutter/material.dart';
 
 import '../../hh.dart';
@@ -15,10 +16,11 @@ class Deals extends StatefulWidget {
 class _SwipperSectionState extends State<Deals> {
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           child: Text(
             'Limited Time Offers',
             style: TextStyle(
@@ -28,14 +30,21 @@ class _SwipperSectionState extends State<Deals> {
           ),
         ),
         Center(
-          child: Container(color: Colors.white,
-            child: FlipClock.countdown(
-              duration: Duration(days: 3, minutes: 25),
-              digitColor: Colors.white,
+          child: Container(
+            decoration: BoxDecoration(
+              color: kPrimaryColor,
+              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+            ),
+            padding: const EdgeInsets.only(top: 4,bottom: 8),
+            child: FlipCountdownClock(
+              digitSize: 40.0,
+              width: 46.0,
+              height: 55.0,hingeLength: 3,
+              separatorColor: Colors.white,
               backgroundColor: kPrimaryColor,
-              digitSize: 30.0,
-              borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-              onDone: () => print('ih'),
+              digitColor: Colors.white,
+              hingeColor: kPrimaryColor,
+              showBorder: false, duration: Duration(days: 3,minutes: 30),
             ),
           ),
         ),
@@ -48,9 +57,8 @@ class _SwipperSectionState extends State<Deals> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (c) =>
-                            CategoryAllProducts("Hot Offers",BacktoScoolPoducts)));
-
+                        builder: (c) => CategoryAllProducts(
+                            "Hot Offers", BacktoScoolPoducts)));
               },
               child: Card(
                 child: Stack(
@@ -64,9 +72,7 @@ class _SwipperSectionState extends State<Deals> {
                           height: double.infinity,
                           width: double.infinity,
                           placeholder: (context, url) => Container(
-                              height: 20,
-                              width: 20,
-                              child:  Container()),
+                              height: 20, width: 20, child: Container()),
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
                         ),
@@ -86,9 +92,10 @@ class _SwipperSectionState extends State<Deals> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Container(
-                         color: Colors.red
-                        ,child: Padding(
-                            padding: const EdgeInsets.only(left: 4,right: 4,top: 2,bottom: 2),
+                          color: Colors.red,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 4, right: 4, top: 2, bottom: 2),
                             child: Text(
                                 '${(products[index].oldPriceOfPiece / products[index].oldPriceOfPiece * 100).round()}% OFF',
                                 textAlign: TextAlign.start,

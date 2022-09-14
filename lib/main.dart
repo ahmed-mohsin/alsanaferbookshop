@@ -9,11 +9,14 @@ import 'package:alsanaferbookshop/products.dart';
 import 'package:alsanaferbookshop/providers/cartProvider.dart';
 import 'package:badges/badges.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:flip_board/flip_board.dart';
+import 'package:flip_board/flip_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:material_dialogs/material_dialogs.dart';
 import 'package:provider/provider.dart';
 import 'package:textfield_search/textfield_search.dart';
 
@@ -69,15 +72,166 @@ class MyApp extends StatelessWidget {
                     color: Colors.deepOrange)),
             inputDecorationTheme: InputDecorationTheme(
                 contentPadding: EdgeInsets.symmetric(horizontal: 10))),
-        home: OnBoardingScreen(),
+        home: FlipFraseBoardPage(),
       ),
     );
   }
 }
 
+class FlipFraseBoardPage extends StatefulWidget {
+  const FlipFraseBoardPage({Key? key}) : super(key: key);
+
+  @override
+  _FlipFraseBoardPageState createState() => _FlipFraseBoardPageState();
+}
+
+class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
+  final _completed = [false, false, false, false, false];
+  final _startNotifier = ValueNotifier(0);
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey);
+    return Theme(
+      data: ThemeData.from(colorScheme: colors),
+      child: Scaffold(
+        backgroundColor: Colors.blueGrey[50],
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height*.2,),
+              Image.asset(
+                'assets/images/2.png',
+                width: MediaQuery.of(context).size.width * .5,
+                height: 150,
+              ),
+              SizedBox(
+                height: 40,
+              ),
+             Text('WELCOME-TO',style: TextStyle(fontSize: 20),),
+              const SizedBox(height: 16.0),
+              FlipFraseBoard(
+                flipType: FlipType.middleFlip,
+                axis: Axis.horizontal,
+                startLetter: 'A',maxFlipDelay: 400,
+                endFrase: 'ELSANAFER',
+                fontSize: 30.0,
+                hingeWidth: 0.4,
+                hingeColor: Colors.black,
+                borderColor: Colors.black,
+                endColors: _flutterEndColrs,
+                letterSpacing: 2.0,
+                onDone: () => _onDone(0),
+                startNotifier: _startNotifier,
+              ),
+              const SizedBox(height: 16.0),
+              FlipFraseBoard(
+                flipType: FlipType.middleFlip,
+                axis: Axis.vertical,
+                startLetter: 'A',maxFlipDelay: 700,
+                endFrase: 'BOOKSTORE',minFlipDelay: 100,
+                fontSize: 20.0,
+                hingeWidth: 0.6,
+                hingeColor: Colors.black,
+                borderColor: Colors.black,
+                endColors: _flipEndColors,
+                letterSpacing: 2.0,
+                onDone: () => _onDone(1),
+                startNotifier: _startNotifier,
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(top: 24.0,bottom: 50),
+                child: _hasCompleted
+                    ? Container()
+                    : SizedBox(
+                        height: 50.0,
+                        width: 50,
+                        child: Lottie.asset('assets/loader.json'),
+                      ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget flipFraseBoard() => FlipFraseBoard(
+        flipType: FlipType.middleFlip,
+        axis: Axis.vertical,
+        startLetter: 'A',
+        endFrase: 'FLIP',
+        fontSize: 30.0,
+        hingeWidth: 0.6,
+        hingeColor: Colors.black,
+        borderColor: Colors.black,
+        endColors: _flipEndColors,
+        letterSpacing: 2.0,
+        onDone: () => _onDone(1),
+        startNotifier: _startNotifier,
+      );
+
+  List<Color> get _flutterEndColrs => [Colors.blue, Colors.blue[900]!];
+
+  List<Color> get _flipEndColors => [
+        Colors.teal[900]!,
+        Colors.blue[900]!,
+        Colors.red[900]!,
+        Colors.blueGrey[900]!,
+      ];
+
+  List<Color> get _spinEndColors => [
+        Colors.cyan[800]!,
+        Colors.orange[900]!,
+        Colors.teal[900]!,
+        Colors.blue[900]!,
+      ];
+
+  List<Color> get _boardsEndColors => [
+        Colors.orange[900]!,
+        Colors.lightGreen[900]!,
+        Colors.red[800]!,
+        Colors.blue[900]!,
+        Colors.teal[900]!,
+        Colors.cyan[800]!,
+      ];
+
+  void _onDone(int index) {
+    _completed[index] = true;
+    if (_hasCompleted) {
+      Navigator.push(context, OnBoardingScreenRoute());
+    }
+
+  }
+
+  void _restart() {
+    setState(() {
+      _completed[0] = false;
+      _completed[1] = false;
+      _completed[2] = false;
+      _completed[3] = false;
+      _completed[4] = false;
+      _startNotifier.value = _startNotifier.value + 1;
+    });
+  }
+
+  bool get _hasCompleted => _completed[0] && _completed[1];
+// _completed[2] &&
+// _completed[3] &&
+// _completed[4];
+}
+
 class HomeScreenRoute extends CupertinoPageRoute {
-  HomeScreenRoute()
-      : super(builder: (BuildContext context) => new Home());
+  HomeScreenRoute() : super(builder: (BuildContext context) => new Home());
 
   @override
   Widget buildPage(BuildContext context, Animation<double> animation,
@@ -85,7 +239,6 @@ class HomeScreenRoute extends CupertinoPageRoute {
     return new FadeTransition(opacity: animation, child: new Home());
   }
 }
-
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -188,23 +341,28 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: Consumer<CartProvider>(
         builder: (context, consumer, child) {
-          return consumer.cartIsEmpty()?Container():FloatingActionButton(
-            onPressed: () {
-              Navigator.push(context, CartScreenRoute());
-            },
-            child: Container(
-              child: Badge(
-                position: BadgePosition.topEnd(top: -15, end: -12),
-                animationDuration: Duration(milliseconds: 300),
-                animationType: BadgeAnimationType.slide,
-                badgeContent: Text(
-                  consumer.getCartItems().length.toString(),
-                  style: TextStyle(color: Colors.white),
-                ),
-                child: Icon(AppIcons.addToCart,size: 35,),
-              ),
-            ),
-          );
+          return consumer.cartIsEmpty()
+              ? Container()
+              : FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(context, CartScreenRoute());
+                  },
+                  child: Container(
+                    child: Badge(
+                      position: BadgePosition.topEnd(top: -15, end: -12),
+                      animationDuration: Duration(milliseconds: 300),
+                      animationType: BadgeAnimationType.slide,
+                      badgeContent: Text(
+                        consumer.getCartItems().length.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      child: Icon(
+                        AppIcons.addToCart,
+                        size: 35,
+                      ),
+                    ),
+                  ),
+                );
         },
       ),
       bottomNavigationBar: bottomNavigationBar(),

@@ -1,10 +1,20 @@
 import 'package:alsanaferbookshop/main.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_screen_onboarding_flutter/introduction.dart';
 import 'package:intro_screen_onboarding_flutter/introscreenonboarding.dart';
 
 import 'NavBarWidgets/HomePage/0.HomePage.dart';
+class OnBoardingScreenRoute extends CupertinoPageRoute {
+  OnBoardingScreenRoute()
+      : super(builder: (BuildContext context) => new OnBoardingScreen());
 
+  @override
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
+    return new FadeTransition(opacity: animation, child: new OnBoardingScreen());
+  }
+}
 class OnBoardingScreen extends StatelessWidget {
   final List<Introduction> list = [
     Introduction(

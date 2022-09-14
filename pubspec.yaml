@@ -59,6 +59,7 @@ dependencies:
   equatable: ^2.0.5
   flutter_credit_card: ^3.0.3
   flutter_launcher_icons: ^0.10.0
+  flip_board: ^0.6.1
 
 dev_dependencies:
   flutter_test:
