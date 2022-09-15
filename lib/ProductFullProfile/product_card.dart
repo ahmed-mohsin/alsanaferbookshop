@@ -56,7 +56,7 @@ class _SingleProductState extends State<SingleProduct> {
   @override
   Widget build(BuildContext context) {
     _isInCart = _checkItemisInCart();
-    print(_isInCart);
+    print(MediaQuery.of(context).size.height * .45 / 2.5);
     return Container(
       width: MediaQuery.of(context).size.width * .48,
       decoration: BoxDecoration(
@@ -81,7 +81,7 @@ class _SingleProductState extends State<SingleProduct> {
                     CachedNetworkImage(
                       imageUrl: widget.product.imageUrl,
                       fit: BoxFit.fill,
-                      height: MediaQuery.of(context).size.height * .45 / 2,
+                      height: 100,
                       placeholder: (context, url) =>
                           Container(height: 20, width: 20, child: Container()),
                       errorWidget: (context, url, error) =>

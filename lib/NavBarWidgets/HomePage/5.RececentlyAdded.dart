@@ -14,7 +14,7 @@ class RecentlyAdded extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(color: Colors.white),
-      height: height(context),
+      height: 300,
       width: MediaQuery.of(context).size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +67,7 @@ class RecentlyAdded extends StatelessWidget {
   }
 
   double height(BuildContext context) =>
-      MediaQuery.of(context).size.height * .45;
+      360;
 }
 class SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight
     extends SliverGridDelegate {

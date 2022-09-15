@@ -27,16 +27,18 @@ class CategoryAllProducts extends StatelessWidget {
               crossAxisCount: 2,
               crossAxisSpacing: 2,
               mainAxisSpacing: 5,
-              height: MediaQuery.of(context).size.height * .37,
+              height: 240,
             ),
             physics: BouncingScrollPhysics(),
             shrinkWrap: true,
             padding: EdgeInsets.all(0),
             itemCount: favoriteProducts.length,
             itemBuilder: (c, i) {
-              return Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: SingleProduct(favoriteProducts[i]),
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: SingleProduct(favoriteProducts[i]),
+                ),
               );
             }),
       ),

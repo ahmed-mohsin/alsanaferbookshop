@@ -10,7 +10,7 @@ import '../../products.dart';
 class Favorites extends StatelessWidget {
   const Favorites({Key? key}) : super(key: key);
   double height(BuildContext context) =>
-      MediaQuery.of(context).size.height * .45;
+      MediaQuery.of(context).size.height * .40;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,7 +54,7 @@ class Favorites extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 2,
                 mainAxisSpacing: 5,
-                height: MediaQuery.of(context).size.height*.37,
+                height: 230,
               ),
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,padding: EdgeInsets.all(0),
@@ -62,7 +62,7 @@ class Favorites extends StatelessWidget {
               itemBuilder: (c, i) {
                 return Padding(
                   padding: const EdgeInsets.all(6.0),
-                  child: SingleProduct(favoriteProducts[i]),
+                  child: Center(child: SingleProduct(favoriteProducts[i])),
                 );
               })
         ],

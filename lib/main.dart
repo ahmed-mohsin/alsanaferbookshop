@@ -134,7 +134,7 @@ class _FlipFraseBoardPageState extends State<FlipFraseBoardPage> {
               FlipFraseBoard(
                 flipType: FlipType.middleFlip,
                 axis: Axis.vertical,
-                startLetter: 'A',maxFlipDelay: 500,
+                startLetter: 'A',maxFlipDelay: 400,
                 endFrase: 'BOOKSTORE',minFlipDelay: 100,
                 fontSize: 20.0,
                 hingeWidth: 0.6,
@@ -296,14 +296,14 @@ class _HomeState extends State<Home> {
         physics: BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
-            floating: true,
+            floating: true,automaticallyImplyLeading: false,
             pinned: true,
             snap: false,
             centerTitle: false,
             backgroundColor: kPrimaryColor,
             title: const Text('Alsanafer Bookshop'),
             bottom: AppBar(
-              backgroundColor: kPrimaryColor,
+              backgroundColor: kPrimaryColor,automaticallyImplyLeading: false,
               title: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
