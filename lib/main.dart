@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:alsanaferbookshop/Boarding.dart';
 import 'package:alsanaferbookshop/constants/colors.dart';
 import 'package:alsanaferbookshop/coustomRoute.dart';
